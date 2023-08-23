@@ -16,18 +16,17 @@ const RecipeModal = () => {
   const [is_liked, setLiked] = useState(false);
   const [likes_count, setLikeCount] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    async function fetchRecipeDetails() {
-      try {
-        const recipeDetails = await getRecipeDetails(id);
-        setRecipe(recipeDetails.recipeDetails.recipe);
-        setLiked(recipeDetails.recipeDetails.is_liked);
-        setLikeCount(recipeDetails.recipeDetails.recipe.likes_count);
-      } catch (error) {
-        console.error("Error fetching recipe details:", error);
-      }
+  async function fetchRecipeDetails() {
+    try {
+      const recipeDetails = await getRecipeDetails(id);
+      setRecipe(recipeDetails.recipeDetails.recipe);
+      setLiked(recipeDetails.recipeDetails.is_liked);
+      setLikeCount(recipeDetails.recipeDetails.recipe.likes_count);
+    } catch (error) {
+      console.error("Error fetching recipe details:", error);
     }
+  }
+  useEffect(() => {
     fetchRecipeDetails();
   }, [id]);
 
@@ -56,7 +55,7 @@ const RecipeModal = () => {
         content: commentText,
       });
       setCommentText("");
-      window.location.reload();
+      fetchRecipeDetails();
     } catch (error) {
       console.error("Error adding comment:", error);
     }
@@ -80,7 +79,7 @@ const RecipeModal = () => {
           <div>
             {recipe && recipe.image_url && (
               <img
-                src={`http://127.0.0.1:8000/api/user/images/${recipe.image_url}`}
+                src={`http://127.0.0.1:8000/api/images/${recipe.image_url}`}
                 alt="recipe preview"
                 className="aspect-square w-[700px] object-cover rounded-sm"
               />

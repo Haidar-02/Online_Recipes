@@ -3,7 +3,6 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\RecipesController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,7 +31,7 @@ Route::group(["middleware" => "auth:api","prefix" => "user"], function(){
         Route::post('/add-item', [RecipesController::class, 'addItem']);
         Route::get('/shop-items', [RecipesController::class, 'getItems']);
 
-        Route::get('/images/{filename}', [ImagesController::class, 'show']);
 });
 Route::post("login", [AuthController::class, "login"]);
 Route::post("register", [AuthController::class, "register"]);
+Route::get('/images/{filename}', [ImagesController::class, 'show']);

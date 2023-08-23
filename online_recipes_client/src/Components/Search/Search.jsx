@@ -70,7 +70,7 @@ const Search = () => {
             className="h-fit w-56 bg-white rounded-md hover:scale-105 transition-all cursor-pointer pb-2 card"
           >
             <img
-              src={`http://127.0.0.1:8000/api/user/images/${result.image_url}`}
+              src={`http://127.0.0.1:8000/api/images/${result.image_url}`}
               alt=""
               className="aspect-square w-full object-cover rounded-sm"
             />
@@ -83,9 +83,9 @@ const Search = () => {
             <div w-full>
               <button
                 onClick={() => navigate(`/recipe/${result.id}`)}
-                className="text-white bg-gray-700 px-3 py-1 rounded-full hover:bg-yellow-600 transition-all cursor-pointer"
+                className="text-white w-48 bg-gray-700 px-3 py-1 rounded-full hover:bg-yellow-600 transition-all cursor-pointer"
               >
-                Details
+                Details {">>"}
               </button>
             </div>
           </div>

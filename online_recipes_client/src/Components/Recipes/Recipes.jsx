@@ -7,6 +7,7 @@ import RecipeModal from "./RecipeModal/RecipeModal";
 import { getAllRecipes, getRecipeDetails } from "../../Helpers/recipes.helpers";
 
 const Recipes = () => {
+  const src = "http://127.0.0.1:8000/api/images/";
   const [recipes, setRecipes] = useState([]);
   const navigate = useNavigate();
 
@@ -33,7 +34,7 @@ const Recipes = () => {
           >
             {recipe && recipe.image_url && (
               <img
-                src={`http://127.0.0.1:8000/api/user/images/${recipe.image_url}`}
+                src={`${src}${recipe.image_url}`}
                 alt="recipe preview"
                 className="aspect-square w-[700px] object-cover rounded-sm"
               />
@@ -46,10 +47,10 @@ const Recipes = () => {
             </div>
             <div w-full>
               <button
-                className="text-white bg-gray-700 px-3 py-1 rounded-full hover:bg-yellow-600 transition-all cursor-pointer"
+                className="text-white w-48 bg-gray-700 px-3 py-1 rounded-full hover:bg-yellow-600 transition-all cursor-pointer"
                 onClick={() => navigate(`/recipe/${recipe.id}`)}
               >
-                Details
+                Details {">>"}
               </button>
             </div>
           </div>

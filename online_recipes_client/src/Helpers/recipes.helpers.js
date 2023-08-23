@@ -69,12 +69,9 @@ async function addComment(recipeId, commentData) {
   }
 }
 
-async function searchRecipes(criteria, searchText) {
+async function searchRecipes(formData) {
   try {
-    const res = await axios.post(`${baseUrl}recipes/search`, {
-      criteria,
-      searchText,
-    });
+    const res = await axios.post(`${baseUrl}recipes/search`, formData, auth());
     if (res.status === 200) {
       const recipes = res.data.recipes;
       return { recipes };

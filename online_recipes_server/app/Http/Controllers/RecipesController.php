@@ -116,27 +116,24 @@ class RecipesController extends Controller
     {
         $criteria = $request->input('criteria'); 
         $text = $request->input('text');    
-
+    
         $query = Recipe::with(['user']);
-
-        switch ($criteria) {
-            case 1:
-                $query->where('title', 'like', "%$text%");
-                break;
-            case 2:
-                $query->where('cuisine', 'like', "%$text%");
-                break;
-            case 3:
-                $query->where('ingredients', 'like', "%$text%");
-                break;
-            default:
-                return response()->json(['message' => 'Invalid criteria'], 400);
+    
+        if ($criteria === '1') {
+            $query->where('title', 'like', "%$text%");
+        } elseif ($criteria === '2') {
+            $query->where('cuisine', 'like', "%$text%");
+        } elseif ($criteria === '3') {
+            $query->where('ingredients', 'like', "%$text%");
+        } else {
+            return response()->json(['message' => 'Invalid criteria'], 400);
         }   
-
+    
         $recipes = $query->get();   
-
+    
         return response()->json(['recipes' => $recipes]);
     }
+    
 
     public function addMealPlan(Request $request)
     {

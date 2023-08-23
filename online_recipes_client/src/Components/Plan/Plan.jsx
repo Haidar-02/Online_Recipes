@@ -1,11 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import MealModal from "./AddMealModal";
+import { getMealPlans } from "../../Helpers/recipes.helpers";
 
 const Plan = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [mealPlans, setMealPlans] = useState([]);
+  const [formattedEvents, setFormattedEvents] = useState([]);
+  async function fetchPlans() {
+    try {
+      const response = await getMealPlans();
+      setMealPlans(response.mealPlans);
+      console.log(response);
+      setFormattedEvents(
+        response.mealPlans.map((mealPlan) => ({
+          title: mealPlan.meal_title,
+          date: mealPlan.meal_date,
+        }))
+      );
+    } catch (error) {
+      console.error("Error fetching meal plans:", error);
+    }
+  }
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -13,6 +30,25 @@ const Plan = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    async function fetchMealPlans() {
+      try {
+        const response = await getMealPlans();
+        setMealPlans(response.mealPlans);
+        console.log(response);
+        setFormattedEvents(
+          response.mealPlans.map((mealPlan) => ({
+            title: mealPlan.meal_title,
+            date: mealPlan.meal_date,
+          }))
+        );
+      } catch (error) {
+        console.error("Error fetching meal plans:", error);
+      }
+    }
+    fetchMealPlans();
+  }, []);
 
   return (
     <div>
@@ -28,9 +64,17 @@ const Plan = () => {
         </button>
       </div>
       <div className="mt-3">
-        <FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" />
+        <FullCalendar
+          plugins={[dayGridPlugin]}
+          initialView="dayGridMonth"
+          events={formattedEvents}
+        />
       </div>
-      <MealModal isOpen={isModalOpen} closeModal={closeModal} />
+      <MealModal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        fetchPlans={fetchPlans}
+      />
     </div>
   );
 };

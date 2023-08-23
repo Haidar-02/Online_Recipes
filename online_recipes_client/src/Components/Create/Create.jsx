@@ -59,7 +59,7 @@ const Create = () => {
   return (
     <div>
       <h1 className="uppercase text-xl border-b-2 border-b-yellow-700 pb-2">
-        Create New Recipe
+        ` Create New Recipe
       </h1>
       <div className="w-full flex items-center justify-center">
         <div>

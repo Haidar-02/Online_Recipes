@@ -17,7 +17,7 @@ const Plan = () => {
   return (
     <div>
       <h1 className="uppercase text-xl border-b-2 border-b-yellow-700 pb-2">
-        Meal Plans
+        ` Meal Plans
       </h1>
       <div className="mt-2">
         <button

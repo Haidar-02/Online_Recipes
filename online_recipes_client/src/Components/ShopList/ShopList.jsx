@@ -25,6 +25,11 @@ const ShopList = () => {
           Add New Items To Buy
         </button>
       </div>
+      <div className="flex flex-wrap mt-5 gap-3">
+        <div className="bg-gray-700 text-white p-3 rounded-lg">
+          <p>Item Title</p>
+        </div>
+      </div>
       <AddItemsToBuy isOpen={isModalOpen} closeModal={closeModal} />
     </div>
   );

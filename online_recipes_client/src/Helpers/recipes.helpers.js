@@ -1,11 +1,11 @@
 import axios from "axios";
 import { auth } from "./auth.helpers";
 
-const baseUrl = "http://127.0.0.1:8000/api/";
+const baseUrl = "http://127.0.0.1:8000/api/user/";
 
 async function getAllRecipes() {
   try {
-    const res = await axios.get(`${baseUrl}getAllRecipes`);
+    const res = await axios.get(`${baseUrl}getAllRecipes`, auth());
     if (res.status === 200) {
       const recipes = res.data.recipes;
       return { recipes };
@@ -27,11 +27,11 @@ async function addRecipe(formData) {
   }
 }
 
-async function getRecipeDetails(recipeId) {
+async function getRecipeDetails(recipe_id) {
   try {
-    const res = await axios.get(`${baseUrl}recipes/${recipeId}`);
+    const res = await axios.get(`${baseUrl}recipes/${recipe_id}`, auth());
     if (res.status === 200) {
-      const recipeDetails = res.data.recipe;
+      const recipeDetails = res.data;
       return { recipeDetails };
     }
   } catch (error) {
@@ -41,11 +41,13 @@ async function getRecipeDetails(recipeId) {
 
 async function likeRecipe(recipeId) {
   try {
-    const res = await axios.post(`${baseUrl}recipes/like/${recipeId}`, auth());
-    if (res.status === 200) {
-      const isLiked = res.data.is_liked;
-      return { isLiked };
-    }
+    const res = await axios.post(
+      `${baseUrl}recipes/like/${recipeId}`,
+      null,
+      auth()
+    );
+    const isLiked = res.data.is_liked;
+    return { isLiked };
   } catch (error) {
     console.log(error);
   }
@@ -132,11 +134,8 @@ async function getShoppingListItems() {
 
 async function getImageUrl(filename) {
   try {
-    const res = await axios.get(`${baseUrl}images/${filename}`);
-    if (res.status === 200) {
-      const imageUrl = res.data.image_url;
-      return imageUrl;
-    }
+    const res = await axios.get(`${baseUrl}images/${filename}`, auth());
+    return res;
   } catch (error) {
     console.log(error);
   }

@@ -10,6 +10,8 @@ import Search from "../../Components/Search/Search";
 import Create from "../../Components/Create/Create";
 import Plan from "../../Components/Plan/Plan";
 import ShopList from "../../Components/ShopList/ShopList";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../Helpers/auth.helpers";
 
 const falseState = {
   recipes: false,
@@ -20,6 +22,7 @@ const falseState = {
 };
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const [state, setState] = useState({
     recipes: true,
     search: false,
@@ -27,6 +30,17 @@ const Dashboard = () => {
     plan: false,
     shopList: false,
   });
+  const handleLogout = async () => {
+    try {
+      const response = await logout();
+      if (response.data) {
+        localStorage.clear();
+        navigate("/");
+      }
+    } catch (e) {
+      console.log("Error logging out");
+    }
+  };
 
   const togglePage = (page) => {
     setState({ ...falseState, [page]: true });
@@ -71,7 +85,10 @@ const Dashboard = () => {
           <img src={cartIcon} alt="" className="w-6 mr-2 float-left" />
           Shopping List
         </div>
-        <button className="py-1 px-3 rounded-full bg-red-500 text-white">
+        <button
+          onClick={handleLogout}
+          className="py-1 px-3 rounded-full bg-red-500 text-white hover:opacity-75"
+        >
           Logout
         </button>
       </div>

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ImagesController;
+use App\Http\Controllers\RecipesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,8 +18,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(["middleware" => "auth:api","prefix" => "user"], function(){
-        Route::post("logout", [AuthController::class, "logout"]);
-        Route::post("refresh", [AuthController::class, "refresh"]);
+        Route::post("/logout", [AuthController::class, "logout"]);
+        Route::post("/refresh", [AuthController::class, "refresh"]);
+
+        Route::get("/getAllRecipes", [RecipesController::class, "getAllRecipes"]);
+        Route::post("/addRecipe", [RecipesController::class, "addRecipe"]);
+        Route::get('/images/{filename}',[ImagesController::class] ,'show');
+        Route::get('/recipes/{recipeId}', [RecipesController::class, 'getRecipeDetails']);
+        Route::post('/recipes/like/{recipeId}', [RecipesController::class, 'likeRecipe']);
+        Route::post('/recipes/comment/{recipeId}', [RecipesController::class, 'addComment']);
+        Route::post('/recipes/search', [RecipesController::class, 'searchRecipes']);
+        Route::post('/meal-plans', [RecipesController::class, 'addMealPlan']);
+        Route::get('/meal-plans', [RecipesController::class, 'getMealPlans']);
+        Route::post('/add-item', [RecipesController::class, 'addItem']);
+        Route::get('/shop-items', [RecipesController::class, 'getItems']);
+
+
 });
 Route::post("login", [AuthController::class, "login"]);
 Route::post("register", [AuthController::class, "register"]);

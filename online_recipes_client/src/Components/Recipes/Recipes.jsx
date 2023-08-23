@@ -31,11 +31,13 @@ const Recipes = () => {
             key={recipe.id}
             className="h-fit w-56 bg-white rounded-md hover:scale-105 transition-all cursor-default pb-2 card"
           >
-            <img
-              src={`http://127.0.0.1:8000/api/user/images/${recipe.image_url}`}
-              alt="recipe preview"
-              className="aspect-square w-full object-cover rounded-sm"
-            />
+            {recipe && recipe.image_url && (
+              <img
+                src={`https://127.0.0.1:8000/api/user/images/${recipe.image_url}`}
+                alt="recipe preview"
+                className="aspect-square w-[700px] object-cover rounded-sm"
+              />
+            )}
             <div className="w-full px-5">
               <h2 className="text-xl tracking-wider">{recipe.title}</h2>
               <p>

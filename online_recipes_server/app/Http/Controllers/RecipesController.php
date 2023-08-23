@@ -27,17 +27,11 @@ class RecipesController extends Controller
                 'title' => 'required|string',
                 'ingredients' => 'required|string',
                 'cuisine' => 'required|string',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'image' => 'nullable|image',
             ]);
-    
-            if ($request->hasFile('image')) {
-                $image = $request->file('image');
+                $image = $request->image;
                 $imagePath = uniqid() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images'), $imagePath);
-            } else {
-                $imagePath = null;
-            }
-    
             $recipe = Recipe::create([
                 'title' => $validatedData['title'],
                 'ingredients' => $validatedData['ingredients'],
@@ -46,7 +40,7 @@ class RecipesController extends Controller
                 'user_id' => Auth::id(),
             ]);
     
-            return response()->json(['message' => 'Recipe created successfully', 'recipe' => $recipe]);
+            return response()->json(['message' => 'Recipe created successfully', 'recipe' => $recipe ]);
         } catch (\Exception $e) {
             return response()->json(['message' => 'An error occurred while creating the recipe', 'error' => $e->getMessage()], 500);
         }

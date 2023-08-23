@@ -78,11 +78,13 @@ const RecipeModal = () => {
         </div>
         <div className="flex">
           <div>
-            <img
-              src={`http://127.0.0.1:8000/api/user/images/${recipe.image_url}`}
-              alt="recipe preview"
-              className="aspect-square w-[700px] object-cover rounded-sm"
-            />
+            {recipe && recipe.image_url && (
+              <img
+                src={`http://127.0.0.1:8000/api/user/images/${recipe.image_url}`}
+                alt="recipe preview"
+                className="aspect-square w-[700px] object-cover rounded-sm"
+              />
+            )}
           </div>
 
           <div className="w-full px-5 ml-10 cursor-default">

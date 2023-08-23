@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { addRecipe } from "../../Helpers/recipes.helpers";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
   const [recipeData, setRecipeData] = useState({
@@ -9,6 +11,7 @@ const Create = () => {
   });
   const [imagePreview, setImagePreview] = useState("");
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value, files } = e.target;
@@ -35,7 +38,9 @@ const Create = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const validationErrors = {};
     if (!recipeData.name) {
       validationErrors.name = "Recipe Name is required.";
@@ -52,12 +57,25 @@ const Create = () => {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      // Proceed with submitting the recipe data
+      try {
+        const formData = new FormData();
+        formData.append("title", recipeData.name);
+        formData.append("cuisine", recipeData.cuisine);
+        formData.append("ingredients", recipeData.ingredients);
+        formData.append("image", recipeData.image);
+
+        const response = await addRecipe(formData);
+        console.log(response);
+        const createdRecipeId = response.data.id;
+        navigate(`/recipe/${createdRecipeId}`);
+      } catch (error) {
+        console.error("Error creating recipe:", error);
+      }
     }
   };
 
   return (
-    <div>
+    <form encType="multipart/form-data" onSubmit={handleSubmit}>
       <h1 className="uppercase text-xl border-b-2 border-b-yellow-700 pb-2">
         ` Create New Recipe
       </h1>
@@ -128,13 +146,13 @@ const Create = () => {
       </div>
       <div className="form-group w-full flex items-center justify-center">
         <button
-          onClick={handleSubmit}
+          type="submit"
           className="self-center px-3 py-1 bg-yellow-600 rounded text-white hover:opacity-75 transition-all"
         >
           Add Recipe
         </button>
       </div>
-    </div>
+    </form>
   );
 };
 

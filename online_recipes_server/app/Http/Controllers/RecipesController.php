@@ -32,7 +32,7 @@ class RecipesController extends Controller
     
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
-                $imagePath = 'images/' . uniqid() . '.' . $image->getClientOriginalExtension();
+                $imagePath = uniqid() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path('images'), $imagePath);
             } else {
                 $imagePath = null;

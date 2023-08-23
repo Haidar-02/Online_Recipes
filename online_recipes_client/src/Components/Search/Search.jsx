@@ -37,9 +37,9 @@ const Search = () => {
             </p>
           </div>
           <div w-full>
-            <p className="text-red-500">
-              <strong>10</strong> Likes
-            </p>
+            <button className="text-white bg-gray-700 px-3 py-1 rounded-full hover:bg-yellow-600 transition-all cursor-pointer">
+              Details
+            </button>
           </div>
         </div>
       </div>

@@ -23,7 +23,6 @@ Route::group(["middleware" => "auth:api","prefix" => "user"], function(){
 
         Route::get("/getAllRecipes", [RecipesController::class, "getAllRecipes"]);
         Route::post("/addRecipe", [RecipesController::class, "addRecipe"]);
-        Route::get('/images/{filename}',[ImagesController::class] ,'show');
         Route::get('/recipes/{recipeId}', [RecipesController::class, 'getRecipeDetails']);
         Route::post('/recipes/like/{recipeId}', [RecipesController::class, 'likeRecipe']);
         Route::post('/recipes/comment/{recipeId}', [RecipesController::class, 'addComment']);
@@ -33,7 +32,7 @@ Route::group(["middleware" => "auth:api","prefix" => "user"], function(){
         Route::post('/add-item', [RecipesController::class, 'addItem']);
         Route::get('/shop-items', [RecipesController::class, 'getItems']);
 
-
+        Route::get('/images/{filename}',[ImagesController::class] ,'show');
 });
 Route::post("login", [AuthController::class, "login"]);
 Route::post("register", [AuthController::class, "register"]);

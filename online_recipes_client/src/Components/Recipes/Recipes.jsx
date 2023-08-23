@@ -33,7 +33,7 @@ const Recipes = () => {
           >
             {recipe && recipe.image_url && (
               <img
-                src={`https://127.0.0.1:8000/api/user/images/${recipe.image_url}`}
+                src={`http://127.0.0.1:8000/api/user/images/${recipe.image_url}`}
                 alt="recipe preview"
                 className="aspect-square w-[700px] object-cover rounded-sm"
               />

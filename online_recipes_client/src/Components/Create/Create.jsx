@@ -66,8 +66,7 @@ const Create = () => {
 
         const response = await addRecipe(formData);
         console.log(response);
-        const createdRecipeId = response.data.id;
-        navigate(`/recipe/${createdRecipeId}`);
+        window.location.reload();
       } catch (error) {
         console.error("Error creating recipe:", error);
       }

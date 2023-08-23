@@ -1,11 +1,14 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Modal from "react-modal";
 
 import Homepage from "./Pages/Homepage/Homepage";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import RegisterPage from "./Pages/RegisterPage/RegisterPage";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import RecipeModal from "./Components/Recipes/RecipeModal/RecipeModal";
+
+Modal.setAppElement(document.body);
 
 function App() {
   return (

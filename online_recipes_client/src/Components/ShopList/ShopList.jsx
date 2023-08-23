@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AddItemsToBuy from "./AddItemsToBuy";
+import { getShoppingListItems } from "../../Helpers/recipes.helpers";
 
 const ShopList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [shoppingListItems, setShoppingListItems] = useState([]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -11,6 +13,21 @@ const ShopList = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const fetchShoppingListItems = async () => {
+    try {
+      const response = await getShoppingListItems();
+      const items = response.items;
+      setShoppingListItems(items);
+      console.log(items);
+    } catch (error) {
+      console.error("Error fetching shopping list items:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchShoppingListItems();
+  }, []);
 
   return (
     <div>
@@ -26,11 +43,17 @@ const ShopList = () => {
         </button>
       </div>
       <div className="flex flex-wrap mt-5 gap-3">
-        <div className="bg-gray-700 text-white p-3 rounded-lg">
-          <p>Item Title</p>
-        </div>
+        {shoppingListItems.map((item) => (
+          <div key={item.id} className="bg-gray-700 text-white p-3 rounded-lg">
+            <p>{item.item_name}</p>
+          </div>
+        ))}
       </div>
-      <AddItemsToBuy isOpen={isModalOpen} closeModal={closeModal} />
+      <AddItemsToBuy
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        fetchShoppingListItems={fetchShoppingListItems}
+      />
     </div>
   );
 };
